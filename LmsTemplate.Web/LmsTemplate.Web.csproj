@@ -7,6 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="8.0.21" />
+    <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="8.0.21" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="8.0.21" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\LmsTemplate.Application\LmsTemplate.Application.csproj" />
     <ProjectReference Include="..\LmsTemplate.Domain\LmsTemplate.Domain.csproj" />
     <ProjectReference Include="..\LmsTemplate.Infrastructure\LmsTemplate.Infrastructure.csproj" />
