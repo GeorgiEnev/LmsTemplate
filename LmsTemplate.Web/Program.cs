@@ -2,7 +2,7 @@ using LmsTemplate.Infrastructure.Data;
 using LmsTemplate.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Design;
+using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,4 +41,14 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
-app.Run();
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+
+    var roleManager = services.GetRequiredService<RoleManager<IdentityRole>>();
+    var userManager = services.GetRequiredService<UserManager<ApplicationUser>>();
+
+    await IdentitySeeder.SeedAsync(roleManager, userManager);
+}
+
+await app.RunAsync();
