@@ -1,4 +1,5 @@
-﻿using LmsTemplate.Infrastructure.Identity;
+﻿using LmsTemplate.Domain.Entities;
+using LmsTemplate.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -11,6 +12,8 @@ namespace LmsTemplate.Infrastructure.Data
         {
         }
 
-        // We'll add DbSet<Course>, DbSet<AcademicRole>, etc. here later.
+        public DbSet<AcademicRole> AcademicRoles { get; set; } = null!;
+
+        public DbSet<UserAcademicRole> UserAcademicRoles { get; set; } = null!;
     }
 }
