@@ -1,25 +1,33 @@
+using LmsTemplate.Application.Interfaces;
 using LmsTemplate.Infrastructure.Data;
 using LmsTemplate.Infrastructure.Identity;
+using LmsTemplate.Infrastructure.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+// DbContext
 builder.Services.AddDbContext<LmsDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Identity
 builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
     .AddEntityFrameworkStores<LmsDbContext>()
     .AddDefaultTokenProviders()
     .AddDefaultUI();
 
-builder.Services.AddControllersWithViews();
+// Application services
+builder.Services.AddScoped<IAcademicRoleService, AcademicRoleService>();
 
+// MVC + Razor Pages
+builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 
 var app = builder.Build();
 
+// Pipeline
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
@@ -32,7 +40,6 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthentication();
-
 app.UseAuthorization();
 
 app.MapControllerRoute(
@@ -41,6 +48,7 @@ app.MapControllerRoute(
 
 app.MapRazorPages();
 
+// Seeding: roles + default admin
 using (var scope = app.Services.CreateScope())
 {
     var services = scope.ServiceProvider;
