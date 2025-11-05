@@ -1,0 +1,36 @@
+﻿@model LmsTemplate.Application.Dtos.AcademicRoles.CreateAcademicRoleRequest
+
+@{
+    ViewData["Title"] = "Create Academic Role";
+}
+
+<h1>Create Academic Role</h1>
+
+<form asp-action="Create" method="post">
+    <div class="form-group">
+        <label asp-for="Period"></label>
+        <input asp-for="Period" class="form-control" />
+        <span asp-validation-for="Period" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Term"></label>
+        <input asp-for="Term" class="form-control" />
+        <span asp-validation-for="Term" class="text-danger"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Specialty"></label>
+        <input asp-for="Specialty" class="form-control" />
+        <span asp-validation-for="Specialty" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Create</button>
+    <a asp-action="Index" class="btn btn-secondary mt-2">Cancel</a>
+</form>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
