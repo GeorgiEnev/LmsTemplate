@@ -20,6 +20,7 @@ namespace LmsTemplate.Infrastructure.Identity
                 }
             }
 
+            // NOTE: email is for dev/demo only, change in real use
             var adminEmail = "admin@demo.com";
             var adminUser = await userManager.FindByEmailAsync(adminEmail);
 

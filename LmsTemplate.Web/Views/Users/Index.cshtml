@@ -1,0 +1,27 @@
+﻿@model IReadOnlyList<LmsTemplate.Application.Dtos.Users.UserSummaryDto>
+
+@{
+    ViewData["Title"] = "Users";
+}
+
+<h1>Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Email</th>
+            <th>Display Name</th>
+            <th>Roles</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model)
+        {
+            <tr>
+                <td>@user.Email</td>
+                <td>@user.DisplayName</td>
+                <td>@string.Join(", ", user.Roles)</td>
+            </tr>
+        }
+    </tbody>
+</table>

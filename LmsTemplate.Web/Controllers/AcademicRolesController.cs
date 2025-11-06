@@ -16,20 +16,17 @@ namespace LmsTemplate.Web.Controllers
             _academicRoleService = academicRoleService;
         }
 
-        // GET: /AcademicRoles
         public async Task<IActionResult> Index()
         {
             var roles = await _academicRoleService.GetAllAsync(includeInactive: true);
             return View(roles);
         }
 
-        // GET: /AcademicRoles/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: /AcademicRoles/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateAcademicRoleRequest request)
