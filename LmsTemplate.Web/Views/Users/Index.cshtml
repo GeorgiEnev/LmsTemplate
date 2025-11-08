@@ -18,7 +18,11 @@
         @foreach (var user in Model)
         {
             <tr>
-                <td>@user.Email</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@user.Id">
+                        @user.Email
+                    </a>
+                </td>
                 <td>@user.DisplayName</td>
                 <td>@string.Join(", ", user.Roles)</td>
             </tr>
