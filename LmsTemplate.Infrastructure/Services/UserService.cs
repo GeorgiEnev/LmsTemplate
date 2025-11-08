@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LmsTemplate.Application.Dtos.Users;
+﻿using LmsTemplate.Application.Dtos.Users;
 using LmsTemplate.Application.Interfaces;
 using LmsTemplate.Infrastructure.Identity;
 using Microsoft.AspNetCore.Identity;
@@ -43,5 +40,27 @@ namespace LmsTemplate.Infrastructure.Services
 
             return result;
         }
+
+        public async Task<UserSummaryDto?> GetByIdAsync(string userId)
+        {
+            var user = await _userManager.Users
+                .FirstOrDefaultAsync(u => u.Id == userId);
+
+            if (user == null)
+            {
+                return null;
+            }
+
+            var roles = await _userManager.GetRolesAsync(user);
+
+            return new UserSummaryDto
+            {
+                Id = user.Id,
+                Email = user.Email ?? string.Empty,
+                DisplayName = user.DisplayName,
+                Roles = roles.ToArray()
+            };
+        }
+
     }
 }

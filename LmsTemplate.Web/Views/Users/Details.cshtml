@@ -1,0 +1,68 @@
+﻿@model LmsTemplate.Web.Models.UserDetailsViewModel
+
+@{
+    ViewData["Title"] = "User Details";
+}
+
+<h1>User Details</h1>
+
+<h3>Basic Info</h3>
+<table class="table">
+    <tr>
+        <th>Email</th>
+        <td>@Model.User.Email</td>
+    </tr>
+    <tr>
+        <th>Display Name</th>
+        <td>@Model.User.DisplayName</td>
+    </tr>
+    <tr>
+        <th>System Roles</th>
+        <td>@string.Join(", ", Model.User.Roles)</td>
+    </tr>
+</table>
+
+<h3>Current Academic Roles</h3>
+@if (Model.CurrentAcademicRoles.Count == 0)
+{
+    <p>No academic roles assigned.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Period</th>
+                <th>Term</th>
+                <th>Specialty</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var role in Model.CurrentAcademicRoles)
+            {
+                <tr>
+                    <td>@role.Period</td>
+                    <td>@role.Term</td>
+                    <td>@role.Specialty</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+<h3>Assign New Academic Role</h3>
+<form asp-action="AssignAcademicRole" method="post">
+    <input type="hidden" asp-for="AssignInput.UserId" />
+
+    <div class="form-group">
+        <label for="SelectedAcademicRoleId">Academic Role</label>
+        <select asp-for="AssignInput.SelectedAcademicRoleId"
+                class="form-control"
+                asp-items="@(new SelectList(Model.AvailableRoles, "Id", "DisplayName"))">
+            <option value="">-- select a role --</option>
+        </select>
+    </div>
+
+    <button type="submit" class="btn btn-primary mt-2">Assign</button>
+    <a asp-action="Index" class="btn btn-secondary mt-2">Back to Users</a>
+</form>

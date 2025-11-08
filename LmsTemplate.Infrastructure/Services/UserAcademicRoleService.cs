@@ -1,7 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using LmsTemplate.Application.Dtos.AcademicRoles;
+﻿using LmsTemplate.Application.Dtos.AcademicRoles;
 using LmsTemplate.Application.Interfaces;
 using LmsTemplate.Domain.Entities;
 using LmsTemplate.Infrastructure.Data;
