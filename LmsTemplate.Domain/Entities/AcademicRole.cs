@@ -1,10 +1,10 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace LmsTemplate.Domain.Entities
 {
     public class AcademicRole
     {
+        [Key]
         public int Id { get; set; }
 
         [Range(1, 20)]

@@ -15,5 +15,7 @@ namespace LmsTemplate.Infrastructure.Data
         public DbSet<AcademicRole> AcademicRoles { get; set; } = null!;
 
         public DbSet<UserAcademicRole> UserAcademicRoles { get; set; } = null!;
+
+        public DbSet<Course> Courses { get; set; } = null!;
     }
 }

@@ -1,10 +1,10 @@
-﻿using System;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace LmsTemplate.Domain.Entities
 {
     public class UserAcademicRole
     {
+        [Key]
         public int Id { get; set; }
 
         [Required]
