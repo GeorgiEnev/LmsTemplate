@@ -7,7 +7,7 @@ using System.Reflection;
 
 namespace LmsTemplate.Infrastructure.Services
 {
-    public class CourseService:ICourseService
+    public class CourseService : ICourseService
     {
         private readonly LmsDbContext _context;
 

@@ -1,0 +1,42 @@
+﻿@model IReadOnlyList<LmsTemplate.Application.Dtos.Courses.CourseDto>
+
+@{
+    ViewData["Title"] = "Courses";
+}
+
+<h1>Courses</h1>
+
+<p>
+    <a asp-action="Create" class="btn btn-primary">Create New Course</a>
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Code</th>
+            <th>Description</th>
+            <th>Active</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var course in Model)
+        {
+            <tr>
+                <td>@course.Title</td>
+                <td>@course.Code</td>
+                <td>@course.Description</td>
+                <td>
+                    @if (course.IsActive)
+                    {
+                        <span class="text-success">Active</span>
+                    }
+                    else
+                    {
+                        <span class="text-danger">Inactive</span>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

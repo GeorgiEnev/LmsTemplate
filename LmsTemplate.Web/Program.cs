@@ -22,6 +22,7 @@ builder.Services.AddIdentity<ApplicationUser, IdentityRole>()
 builder.Services.AddScoped<IAcademicRoleService, AcademicRoleService>();
 builder.Services.AddScoped<IUserAcademicRoleService, UserAcademicRoleService>();
 builder.Services.AddScoped<IUserService, UserService>();
+builder.Services.AddScoped<ICourseService, CourseService>();
 
 // MVC + Razor Pages
 builder.Services.AddControllersWithViews();
