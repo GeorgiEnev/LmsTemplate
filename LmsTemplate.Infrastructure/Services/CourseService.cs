@@ -48,14 +48,41 @@ namespace LmsTemplate.Infrastructure.Services
             return course.Id;
         }
 
-        public Task<IReadOnlyList<CourseDto>> GetAllCoursesAsync()
+        public async Task<IReadOnlyList<CourseDto>> GetAllCoursesAsync()
         {
-            throw new NotImplementedException();
+            var courses = await _context.Courses
+                .AsNoTracking()
+                .ToListAsync();
+
+            var dtoList = courses.Select(c => new CourseDto
+            {
+                Id = c.Id,
+                Title = c.Title,
+                Code = c.Code,
+                Description = c.Description,
+                IsActive = c.IsActive
+            }).ToList();
+
+            return dtoList;
         }
 
-        public Task<CourseDto?> GetByIdAsync(int id)
+        public async Task<CourseDto?> GetByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var     course = await _context.Courses
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Id == id);
+
+            if (course == null)
+                return null;
+
+            return new CourseDto
+            {
+                Id = course.Id,
+                Title = course.Title,
+                Code = course.Code,
+                Description = course.Description,
+                IsActive = course.IsActive
+            };
         }
     }
 }
