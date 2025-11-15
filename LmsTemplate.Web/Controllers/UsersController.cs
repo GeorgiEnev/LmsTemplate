@@ -24,14 +24,12 @@ namespace LmsTemplate.Web.Controllers
             _userAcademicRoleService = userAcademicRoleService;
         }
 
-        // GET: /Users
         public async Task<IActionResult> Index()
         {
             var users = await _userService.GetAllAsync();
             return View(users);
         }
 
-        // GET: /Users/Details/{id}
         public async Task<IActionResult> Details(string id)
         {
             if (string.IsNullOrWhiteSpace(id))
@@ -62,7 +60,6 @@ namespace LmsTemplate.Web.Controllers
             return View(vm);
         }
 
-        // POST: /Users/AssignAcademicRole
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AssignAcademicRole(AssignAcademicRoleInput input)
