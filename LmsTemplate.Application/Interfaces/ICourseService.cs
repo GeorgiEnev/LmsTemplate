@@ -9,5 +9,8 @@ namespace LmsTemplate.Application.Interfaces
         Task<IReadOnlyList<CourseDto>> GetAllCoursesAsync();
 
         Task<CourseDto?> GetByIdAsync(int id);
+
+        Task<bool> UpdateCourseAsync(int id, UpdateCourseRequest request);
+
     }
 }

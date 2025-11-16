@@ -84,5 +84,36 @@ namespace LmsTemplate.Infrastructure.Services
                 IsActive = course.IsActive
             };
         }
+
+        public async Task<bool> UpdateCourseAsync(int id, UpdateCourseRequest request)
+        {
+            var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (course == null)
+            {
+                return false;
+            }
+
+            if (string.IsNullOrWhiteSpace(request.Title))
+                throw new ArgumentException("Course title cannot be empty.");
+
+            if (string.IsNullOrWhiteSpace(request.Code))
+                throw new ArgumentException("Course code cannot be empty.");
+
+            bool duplicate = await _context.Courses
+                .AnyAsync(c => c.Code == request.Code && c.Id != id);
+
+            if (duplicate)
+                throw new ArgumentException("Another course with this code already exists.");
+
+            course.Title = request.Title;
+            course.Code = request.Code;
+            course.Description = request.Description;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
+
     }
 }

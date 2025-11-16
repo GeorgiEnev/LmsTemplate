@@ -59,5 +59,45 @@ namespace LmsTemplate.Web.Controllers
             return View(course);
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var course = await _courseService.GetByIdAsync(id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            var model = new UpdateCourseRequest
+            {
+                Title = course.Title,
+                Code = course.Code,
+                Description = course.Description
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(int id, UpdateCourseRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(request);
+            }
+
+            try
+            {
+                await _courseService.UpdateCourseAsync(id, request);
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception ex)
+            {
+                ModelState.AddModelError(string.Empty, ex.Message);
+                return View(request);
+            }
+        }
+
     }
 }
