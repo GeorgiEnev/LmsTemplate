@@ -28,7 +28,7 @@
 
         <form asp-action="ToggleStatus" asp-route-id="@Model.Id" method="post" style="display:inline;">
             <button type="submit" class="btn @(Model.IsActive ? "btn-danger" : "btn-success")">
-                @(Model.IsActive ? "Deactivate" : "Activate")
+                @(Model.IsActive ? "Deactivate" : "Activate")   
             </button>
         </form>
 

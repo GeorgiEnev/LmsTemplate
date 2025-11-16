@@ -17,5 +17,18 @@ namespace LmsTemplate.Infrastructure.Data
         public DbSet<UserAcademicRole> UserAcademicRoles { get; set; } = null!;
 
         public DbSet<Course> Courses { get; set; } = null!;
+
+        public DbSet<AcademicRoleCourse> AcademicRoleCourses { get; set; } = null!;
+
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            base.OnModelCreating(builder);
+
+            builder.Entity<AcademicRoleCourse>()
+                .HasIndex(arc => new { arc.AcademicRoleId, arc.CourseId })
+                .IsUnique();
+        }
+
     }
 }

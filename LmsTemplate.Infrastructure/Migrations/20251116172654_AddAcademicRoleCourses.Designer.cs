@@ -4,6 +4,7 @@ using LmsTemplate.Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace LmsTemplate.Infrastructure.Migrations
 {
     [DbContext(typeof(LmsDbContext))]
-    partial class LmsDbContextModelSnapshot : ModelSnapshot
+    [Migration("20251116172654_AddAcademicRoleCourses")]
+    partial class AddAcademicRoleCourses
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,6 +24,29 @@ namespace LmsTemplate.Infrastructure.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
+
+            modelBuilder.Entity("AcademicRoleCourse", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<int>("AcademicRoleId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("CourseId")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AcademicRoleId");
+
+                    b.HasIndex("CourseId");
+
+                    b.ToTable("AcademicRoleCourses");
+                });
 
             modelBuilder.Entity("LmsTemplate.Domain.Entities.AcademicRole", b =>
                 {
@@ -47,30 +73,6 @@ namespace LmsTemplate.Infrastructure.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("AcademicRoles");
-                });
-
-            modelBuilder.Entity("LmsTemplate.Domain.Entities.AcademicRoleCourse", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
-
-                    b.Property<int>("AcademicRoleId")
-                        .HasColumnType("int");
-
-                    b.Property<int>("CourseId")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CourseId");
-
-                    b.HasIndex("AcademicRoleId", "CourseId")
-                        .IsUnique();
-
-                    b.ToTable("AcademicRoleCourses");
                 });
 
             modelBuilder.Entity("LmsTemplate.Domain.Entities.Course", b =>
@@ -336,7 +338,7 @@ namespace LmsTemplate.Infrastructure.Migrations
                     b.ToTable("AspNetUserTokens", (string)null);
                 });
 
-            modelBuilder.Entity("LmsTemplate.Domain.Entities.AcademicRoleCourse", b =>
+            modelBuilder.Entity("AcademicRoleCourse", b =>
                 {
                     b.HasOne("LmsTemplate.Domain.Entities.AcademicRole", "AcademicRole")
                         .WithMany()
