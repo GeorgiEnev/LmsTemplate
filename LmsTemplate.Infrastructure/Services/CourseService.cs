@@ -115,5 +115,19 @@ namespace LmsTemplate.Infrastructure.Services
             return true;
         }
 
+        public async Task<bool> ToggleActiveStatusAsync(int id)
+        {
+            var course = await _context.Courses.FirstOrDefaultAsync(c => c.Id == id);
+
+            if (course == null)
+                return false;
+
+            course.IsActive = !course.IsActive;
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }
+

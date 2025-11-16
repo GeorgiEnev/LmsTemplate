@@ -99,5 +99,13 @@ namespace LmsTemplate.Web.Controllers
             }
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ToggleStatus(int id)
+        {
+            await _courseService.ToggleActiveStatusAsync(id);
+
+            return RedirectToAction(nameof(Details), new { id });
+        }
     }
 }

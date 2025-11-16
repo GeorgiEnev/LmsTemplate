@@ -12,5 +12,7 @@ namespace LmsTemplate.Application.Interfaces
 
         Task<bool> UpdateCourseAsync(int id, UpdateCourseRequest request);
 
+        Task<bool> ToggleActiveStatusAsync(int id);
+
     }
 }

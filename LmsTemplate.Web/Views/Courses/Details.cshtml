@@ -26,6 +26,13 @@
             }
         </p>
 
+        <form asp-action="ToggleStatus" asp-route-id="@Model.Id" method="post" style="display:inline;">
+            <button type="submit" class="btn @(Model.IsActive ? "btn-danger" : "btn-success")">
+                @(Model.IsActive ? "Deactivate" : "Activate")
+            </button>
+        </form>
+
+
         <a class="btn btn-warning" asp-action="Edit" asp-route-id="@Model.Id">Edit Course</a>
         <a asp-action="Index" class="btn btn-secondary">Back to Courses</a>
     </div>
