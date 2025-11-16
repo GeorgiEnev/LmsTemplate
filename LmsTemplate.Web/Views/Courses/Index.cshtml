@@ -23,7 +23,11 @@
         @foreach (var course in Model)
         {
             <tr>
-                <td>@course.Title</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@course.Id">
+                        @course.Title
+                    </a>
+                </td>
                 <td>@course.Code</td>
                 <td>@course.Description</td>
                 <td>

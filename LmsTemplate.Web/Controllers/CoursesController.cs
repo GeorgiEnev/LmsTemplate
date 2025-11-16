@@ -46,5 +46,18 @@ namespace LmsTemplate.Web.Controllers
                 return View(request);
             }
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var course = await _courseService.GetByIdAsync(id);
+
+            if (course == null)
+            {
+                return NotFound();
+            }
+
+            return View(course);
+        }
+
     }
 }

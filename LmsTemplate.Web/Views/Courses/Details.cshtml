@@ -1,0 +1,31 @@
+﻿@model LmsTemplate.Application.Dtos.Courses.CourseDto
+
+@{
+    ViewData["Title"] = "Course Details";
+}
+
+<h1>Course Details</h1>
+
+<div class="card">
+    <div class="card-body">
+
+        <h3>@Model.Title</h3>
+
+        <p><strong>Code:</strong> @Model.Code</p>
+        <p><strong>Description:</strong> @Model.Description</p>
+
+        <p>
+            <strong>Status:</strong>
+            @if (Model.IsActive)
+            {
+                <span class="text-success">Active</span>
+            }
+            else
+            {
+                <span class="text-danger">Inactive</span>
+            }
+        </p>
+
+        <a asp-action="Index" class="btn btn-secondary">Back to Courses</a>
+    </div>
+</div>
