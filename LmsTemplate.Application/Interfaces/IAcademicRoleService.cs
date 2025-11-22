@@ -19,5 +19,7 @@ namespace LmsTemplate.Application.Interfaces
         Task AssignCoursesAsync(int roleId, List<int> selectedCourseIds);
 
         Task<AssignCoursesToRoleViewModel> BuildAssignCoursesViewModelAsync(int roleId);
+        Task<AcademicRoleDetailsDto?> GetDetailsAsync(int id);
+
     }
 }

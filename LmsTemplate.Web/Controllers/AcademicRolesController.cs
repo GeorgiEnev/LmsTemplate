@@ -43,7 +43,8 @@ namespace LmsTemplate.Web.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var role = await _academicRoleService.GetByIdAsync(id);
+            var role = await _academicRoleService.GetDetailsAsync(id);
+
             if (role == null)
                 return NotFound();
 

@@ -177,5 +177,37 @@ namespace LmsTemplate.Infrastructure.Services
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<AcademicRoleDetailsDto?> GetDetailsAsync(int id)
+        {
+            var role = await _context.AcademicRoles.FindAsync(id);
+            if (role == null)
+                return null;
+
+            var assignedIds = await GetAssignedCourseIdsAsync(id);
+
+            var courses = await _context.Courses
+                .Where(c => assignedIds.Contains(c.Id))
+                .Select(c => new CourseDto
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    Code = c.Code,
+                    Description = c.Description,
+                    IsActive = c.IsActive
+                })
+                .ToListAsync();
+
+            return new AcademicRoleDetailsDto
+            {
+                Id = role.Id,
+                Period = role.Period,
+                Term = role.Term,
+                Specialty = role.Specialty,
+                IsActive = role.IsActive,
+                AssignedCourses = courses
+            };
+        }
+
     }
 }
