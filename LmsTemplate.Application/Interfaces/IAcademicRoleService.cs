@@ -13,5 +13,11 @@ namespace LmsTemplate.Application.Interfaces
         Task<AcademicRoleDto?> GetByIdAsync(int id);
 
         Task DeactivateAsync(int id);
+
+        Task<List<int>> GetAssignedCourseIdsAsync(int roleId);
+
+        Task AssignCoursesAsync(int roleId, List<int> selectedCourseIds);
+
+        Task<AssignCoursesToRoleViewModel> BuildAssignCoursesViewModelAsync(int roleId);
     }
 }

@@ -1,4 +1,5 @@
 ﻿using LmsTemplate.Application.Dtos.AcademicRoles;
+using LmsTemplate.Application.Dtos.Courses;
 using LmsTemplate.Application.Interfaces;
 using LmsTemplate.Domain.Entities;
 using LmsTemplate.Infrastructure.Data;
@@ -88,6 +89,93 @@ namespace LmsTemplate.Infrastructure.Services
                 Specialty = role.Specialty,
                 IsActive = role.IsActive
             };
+        }
+
+        public async Task<List<int>> GetAssignedCourseIdsAsync(int roleId)
+        {
+            var courseIds = await _context.AcademicRoleCourses
+                .Where(arc => arc.AcademicRoleId == roleId)
+                .Select(arc => arc.CourseId)
+                .ToListAsync();
+
+            return courseIds;
+        }
+
+        public async Task<AssignCoursesToRoleViewModel> BuildAssignCoursesViewModelAsync(int roleId)
+        {
+            var role = await _context.AcademicRoles.FindAsync(roleId);
+
+            if (role == null)
+            {
+                throw new Exception("Academic role not found.");
+            }
+
+            var allCourses = await _context.Courses
+                .OrderBy(c => c.Title)
+                .Select(c => new CourseDto
+                {
+                    Id = c.Id,
+                    Title = c.Title,
+                    Code = c.Code,
+                    Description = c.Description,
+                    IsActive = c.IsActive
+                })
+                .ToListAsync();
+
+            var assignedCourseIds = await GetAssignedCourseIdsAsync(roleId);
+
+            var vm = new AssignCoursesToRoleViewModel
+            {
+                AcademicRoleId = role.Id,
+                AcademicRoleName = $"{role.Specialty} - Term {role.Term}, Period {role.Period}",
+                AllCourses = allCourses,
+                SelectedCourseIds = assignedCourseIds
+            };
+
+            return vm;
+        }
+
+        public async Task AssignCoursesAsync(int roleId, List<int> selectedCourseIds)
+        {
+            var existing =  await _context.AcademicRoleCourses
+                .Where(arc => arc.AcademicRoleId == roleId)
+                .ToListAsync();
+
+            var existingCourseIds = existing
+            .Select(e => e.CourseId)
+            .ToList();
+
+            var toAdd = selectedCourseIds
+            .Except(existingCourseIds)
+            .ToList();
+
+            var toRemove = existingCourseIds
+            .Except(selectedCourseIds)
+            .ToList();
+
+            foreach (var courseId in toAdd)
+            {
+                var newAssignment = new AcademicRoleCourse
+                {
+                    AcademicRoleId = roleId,
+                    CourseId = courseId
+                };
+
+                _context.AcademicRoleCourses.Add(newAssignment);
+            }
+
+            foreach (var courseId in toRemove)
+            {
+                var assignment = existing
+                    .FirstOrDefault(e => e.CourseId == courseId);
+
+                if (assignment != null)
+                {
+                    _context.AcademicRoleCourses.Remove(assignment);
+                }
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }
