@@ -25,7 +25,11 @@
             <tr>
                 <td>@role.Period</td>
                 <td>@role.Term</td>
-                <td>@role.Specialty</td>
+                <td>
+                    <a asp-action="Details" asp-route-id="@role.Id">
+                        @role.Specialty
+                    </a>
+                </td>
                 <td>@(role.IsActive ? "Yes" : "No")</td>
             </tr>
         }

@@ -1,0 +1,40 @@
+﻿@model LmsTemplate.Application.Dtos.AcademicRoles.AcademicRoleDto
+
+@{
+    ViewData["Title"] = "Academic Role Details";
+}
+
+<h2>Academic Role Details</h2>
+<hr />
+
+<div class="card p-3">
+
+    <dl class="row">
+        <dt class="col-sm-3">Period:</dt>
+        <dd class="col-sm-9">@Model.Period</dd>
+
+        <dt class="col-sm-3">Term:</dt>
+        <dd class="col-sm-9">@Model.Term</dd>
+
+        <dt class="col-sm-3">Specialty:</dt>
+        <dd class="col-sm-9">@Model.Specialty</dd>
+
+        <dt class="col-sm-3">Active:</dt>
+        <dd class="col-sm-9">
+            @if (Model.IsActive)
+            {
+                <span class="text-success">Active</span>
+            }
+            else
+            {
+                <span class="text-danger">Inactive</span>
+            }
+        </dd>
+    </dl>
+
+</div>
+
+<div class="mt-3">
+    <a asp-action="AssignCourses" asp-route-id="@Model.Id" class="btn btn-info">Assign Courses</a>
+    <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+</div>

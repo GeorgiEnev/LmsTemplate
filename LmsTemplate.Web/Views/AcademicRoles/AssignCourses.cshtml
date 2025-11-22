@@ -1,0 +1,42 @@
+﻿@model LmsTemplate.Application.Dtos.AcademicRoles.AssignCoursesToRoleViewModel
+
+@{
+    ViewData["Title"] = "Assign Courses";
+}
+
+<h2>Assign Courses to @Model.AcademicRoleName</h2>
+<hr />
+
+<form asp-action="AssignCourses" asp-route-id="@Model.AcademicRoleId" method="post">
+    <div class="mb-3">
+        <p>Select the courses that belong to this academic role.</p>
+    </div>
+
+    <div class="list-group">
+
+        @foreach (var course in Model.AllCourses)
+        {
+            <label class="list-group-item">
+                <input type="checkbox"
+                       name="SelectedCourseIds"
+                       value="@course.Id"
+                       @(Model.SelectedCourseIds.Contains(course.Id) ? "checked" : "") />
+
+                <strong>@course.Title</strong> (@course.Code)
+
+                @if (!string.IsNullOrWhiteSpace(course.Description))
+                {
+                    <div class="small text-muted">
+                        @course.Description
+                    </div>
+                }
+            </label>
+        }
+
+    </div>
+
+    <div class="mt-3">
+        <button type="submit" class="btn btn-primary">Save Changes</button>
+        <a asp-action="Details" asp-route-id="@Model.AcademicRoleId" class="btn btn-secondary">Back</a>
+    </div>
+</form>

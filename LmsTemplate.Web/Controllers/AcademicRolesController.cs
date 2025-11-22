@@ -40,5 +40,29 @@ namespace LmsTemplate.Web.Controllers
 
             return RedirectToAction(nameof(Index));
         }
+
+        public async Task<IActionResult> Details(int id)
+        {
+            var role = await _academicRoleService.GetByIdAsync(id);
+            if (role == null)
+                return NotFound();
+
+            return View(role);
+        }
+
+
+        public async Task<IActionResult> AssignCourses(int id)
+        {
+            var vm = await _academicRoleService.BuildAssignCoursesViewModelAsync(id);
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AssignCourses(int id, AssignCoursesToRoleViewModel model)
+        {
+            await _academicRoleService.AssignCoursesAsync(id, model.SelectedCourseIds);
+            return RedirectToAction("Details", new { id });
+        }
     }
 }
